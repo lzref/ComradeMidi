@@ -1,10 +1,15 @@
-#include "USBComposite.h"
+#include <Arduino.h>
+#include <USBComposite.h>
 
 USBMIDI midi;
 
 const int buttonCount = 16;
-int buttonPins[buttonCount] = {PB11, PB10, PB1, PB0, PA7, PA6, PA5, PA4,
-  PA3, PA2, PA1, PA0, PC15, PC14, PB12, PB13};
+int buttonPins[buttonCount] = {
+  PA6, PB10, PA4, PC14,
+  PB0, PA5, PB11, PA2,
+  PB14, PA8, PA3, PA0,
+  PB5, PA9, PB7, PB4
+};
 int ledPin = PC13;
 
 unsigned long lastDebounceTimes[buttonCount] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
@@ -20,7 +25,7 @@ void setup() {
   
   USBComposite.setProductId(0x0031);
   midi.begin();
-  while (!USBComposite);
+  while (!USBComposite.isReady());
 }
 
 void loop() {
